@@ -27,3 +27,23 @@ func GetAuditableDB(c echo.Context, db *gorm.DB) *middleware.AuditableDB {
 
 	return middleware.NewAuditableDB(db, uint(userID))
 }
+
+// ValidateEmployeeAccess checks if the current user can access employee-specific data
+func ValidateEmployeeAccess(c echo.Context, targetEmployeeID uint) bool {
+	role := c.Get("authenticated_role").(string)
+
+	// Admins can access any employee's data
+	if role == "admin" {
+		return true
+	}
+
+	// Employees can only access their own data
+	if role == "employee" {
+		userID, ok := c.Get("authenticated_user_id").(uint)
+		if ok && userID == targetEmployeeID {
+			return true
+		}
+	}
+
+	return false
+}

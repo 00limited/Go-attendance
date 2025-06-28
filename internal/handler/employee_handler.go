@@ -7,7 +7,6 @@ import (
 	"github.com/yourname/payslip-system/internal/dto/request"
 	"github.com/yourname/payslip-system/internal/helper"
 	"github.com/yourname/payslip-system/internal/helper/response"
-	"github.com/yourname/payslip-system/internal/middleware"
 	"github.com/yourname/payslip-system/internal/repository"
 	"gorm.io/gorm"
 )
@@ -92,7 +91,7 @@ func (h *EmployeeHandler) GetEmployeeByID(c echo.Context) error {
 	}
 
 	// Check if user has access to this employee's data
-	if !middleware.ValidateEmployeeAccess(c, uint(employeeID)) {
+	if !helper.ValidateEmployeeAccess(c, uint(employeeID)) {
 		return h.Response.SendCustomResponse(c, 403, "Access denied. You can only view your own profile.", nil)
 	}
 

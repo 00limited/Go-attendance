@@ -7,7 +7,6 @@ import (
 	"github.com/yourname/payslip-system/internal/dto/request"
 	"github.com/yourname/payslip-system/internal/helper"
 	"github.com/yourname/payslip-system/internal/helper/response"
-	"github.com/yourname/payslip-system/internal/middleware"
 	"github.com/yourname/payslip-system/internal/repository"
 	"github.com/yourname/payslip-system/internal/usecases"
 )
@@ -101,7 +100,7 @@ func (h *PayrollHandler) GetPayslipsByEmployee(c echo.Context) error {
 	}
 
 	// Check authorization - employees can only access their own payslips
-	if !middleware.ValidateEmployeeAccess(c, empID) {
+	if !helper.ValidateEmployeeAccess(c, empID) {
 		return h.response.SendCustomResponse(c, 403, "Access denied. You can only access your own payslips.", nil)
 	}
 
@@ -160,7 +159,7 @@ func (h *PayrollHandler) GetDetailedPayslip(c echo.Context) error {
 	}
 
 	// Check authorization - employees can only access their own payslips
-	if !middleware.ValidateEmployeeAccess(c, payslip.EmployeeID) {
+	if !helper.ValidateEmployeeAccess(c, payslip.EmployeeID) {
 		return h.response.SendCustomResponse(c, 403, "Access denied. You can only access your own payslips.", nil)
 	}
 
