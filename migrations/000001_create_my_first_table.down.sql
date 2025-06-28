@@ -1,0 +1,7 @@
+
+
+DROP TABLE IF EXISTS employees;
+DROP TABLE IF EXISTS attendances;
+DROP TABLE IF EXISTS overtimes;
+DROP TABLE IF EXISTS reimbursements;
+DROP TABLE IF EXISTS payslips;

@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:16-alpine3.18
+    command: -p ${DB_PORT:-5434}
+    environment:
+      POSTGRES_DB: ${DB_NAME:-localdb}
+      POSTGRES_USER: ${DB_USER:-dada}
+      POSTGRES_PASSWORD: ${DB_PASS:-123}
+      POSTGRES_SSL_MODE: ${DB_SSL_MODE:-enable}
+    ports:
+      - ${DB_PORT:-5434}:${DB_PORT:-5434}
+    volumes:
+      - ${DATA_LOCATION:-postgres_data}:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
